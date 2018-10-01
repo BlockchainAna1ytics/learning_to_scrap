@@ -1,3 +1,9 @@
+"""
+Module that implements the scraper which reads a web page, parses it and stores the data in a CSV file.
+In order for this to function properly, you will have to install beautiful soup4 and be able to import
+DictToCsvWriter and urllib.
+"""
+
 from csv_writer import DictToCsvWriter
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen as get
