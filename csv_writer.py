@@ -11,7 +11,7 @@ class DictToCsvWriter:
     """
     Class used to write more dictionaries to a csv file given the dict keys as list (the header).
     """
-    def __init__(self, outfile, header=None, newline=''):
+    def __init__(self, outfile, header, newline=''):
         """Init method for DictToCsvWriter class
 
         args:
