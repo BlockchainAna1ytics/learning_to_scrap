@@ -17,10 +17,11 @@ header = ['coin_name', 'market_cap', 'price', 'price_change']
 print(f"Connecting to: '{url}'")
 with get(url) as u_page:
     html_page = u_page.read()
-    print('Parsing the retrieved web page')
-    parsed_page = soup(html_page, 'html.parser')
-    table = parsed_page.findAll('table', {'id': 'currencies-all'})
-    t_rows = table[0].tbody.findAll('tr')
+
+print('Parsing the retrieved web page')
+parsed_page = soup(html_page, 'html.parser')
+table = parsed_page.findAll('table', {'id': 'currencies-all'})
+t_rows = table[0].tbody.findAll('tr')
 
 for tr in t_rows:
     table_list = list()
