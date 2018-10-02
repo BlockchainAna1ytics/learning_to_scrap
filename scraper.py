@@ -14,8 +14,8 @@ retlist = []
 outfile = 'test.csv'
 header = ['coin_name', 'market_cap', 'price', 'price_change']
 
+print(f"Connecting to: '{url}'")
 with get(url) as u_page:
-    print(f"Connecting to: '{url}'")
     html_page = u_page.read()
     print('Parsing the retrieved web page')
     parsed_page = soup(html_page, 'html.parser')
