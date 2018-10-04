@@ -7,6 +7,7 @@ DictToCsvWriter and urllib.
 from csv_writer import DictToCsvWriter
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen as get
+from html_finder import find_text_in_tag
 
 
 url = 'https://coinmarketcap.com/all/views/all/'
@@ -20,19 +21,20 @@ with get(url) as u_page:
 
 print('Parsing the retrieved web page')
 parsed_page = soup(html_page, 'html.parser')
-table = parsed_page.findAll('table', {'id': 'currencies-all'})
-t_rows = table[0].tbody.findAll('tr')
+table = parsed_page.find('table', {'id': 'currencies-all'})
+t_rows = table.tbody.findAll('tr')
 
 for tr in t_rows:
-    table_list = list()
+    table_line = list()
     try:
-        table_list.append(tr.find('a', {'class': 'currency-name-container'}).text.strip())
-        table_list.append(tr.find('td', {'class': 'market-cap'}).text.strip())
-        table_list.append(tr.find('a', {'class': 'price'}).text.strip())
-        table_list.append(tr.find('td', {'data-timespan': '7d'}).text.strip('%'))
+        table_line.append(find_text_in_tag(tr, 'a', {'class': 'currency-name-container'}))
+        table_line.append(find_text_in_tag(tr, 'td', {'class': 'market-cap'}))
+        table_line.append(find_text_in_tag(tr, 'a', {'class': 'price'}))
+        table_line.append(find_text_in_tag(tr, 'td', {'data-timespan': '7d', 'data-sort': '-0.0001'}).strip('%'))
     except Exception:
+        print(f"Could not parse data for {' '.join(table_line)}")
         continue
-    retlist.append({k: v for k, v in zip(header, table_list)})
+    retlist.append({k: v for k, v in zip(header, table_line)})
 
 print(f"Writing the scraped data to '{outfile}'")
 with DictToCsvWriter(outfile, header=header) as writer:
