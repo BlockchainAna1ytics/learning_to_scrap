@@ -12,7 +12,7 @@ from html_finder import find_text_in_tag
 
 url = 'https://coinmarketcap.com/all/views/all/'
 retlist = []
-outfile = 'test.csv'
+outfile = 'scraper_results.csv'
 header = ['coin_name', 'market_cap', 'price', 'price_change']
 
 print(f"Connecting to: '{url}'")
