@@ -1,7 +1,7 @@
 """
 Module that implements the scraper which reads a web page, parses it and stores the data in a CSV file.
 In order for this to function properly, you will have to install beautiful soup4 and be able to import
-DictToCsvWriter and urllib.
+DictToCsvWriter, urllib and html_finder.
 """
 
 from csv_writer import DictToCsvWriter
@@ -16,8 +16,8 @@ outfile = 'test.csv'
 header = ['coin_name', 'market_cap', 'price', 'price_change']
 
 print(f"Connecting to: '{url}'")
-with get(url) as u_page:
-    html_page = u_page.read()
+with get(url) as web_page:
+    html_page = web_page.read()
 
 print('Parsing the retrieved web page')
 parsed_page = soup(html_page, 'html.parser')
